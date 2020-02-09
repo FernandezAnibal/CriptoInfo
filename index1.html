@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+</head>
+<body>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script>
+
+	
+	
+function getval(callback ){
+    jQuery.getJSON('http://data.mtgox.com/api/1/BTCUSD/ticker', function(data) {
+        // We can't use .return because return is a JavaScript keyword.
+        callback(data['return'].last.value);
+    });
+}
+
+
+    function getbtcmtgox() {
+	
+        getval( function ( value ) { 
+			document.getElementById("myWatch").innerHTML = 'Bitcoin ' + value + '$'+ '<title>'+ value +'</title>';
+        } );
+		
+    }
+	getbtcmtgox();
+    setInterval(getbtcmtgox,5000);
+
+    </script>
+</body>
+  <div id='myWatch'></div>
+</html>

@@ -1,0 +1,54 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+//Función BTCE
+    function getbtceAJAX() {
+  
+        var btcea = $.ajax({
+            url: 'btce.php', 
+                dataType: 'text',
+                async: false     
+        }).responseText;
+        
+        document.getElementById("btce").innerHTML = btcea;
+    }
+//Función BTCE
+
+//Función Bitstamp
+    function getbitstampAJAX() {
+  
+        var time = $.ajax({
+
+            url: 'bitstamp.php', 
+                dataType: 'text',
+                async: false     
+        }).responseText;
+        
+        document.getElementById("bitstamp").innerHTML = time;
+    }
+//Función Bitstamp
+
+
+
+    //Tasas de refrescamiento
+	
+    setInterval(getbtceAJAX,5000);
+	setInterval(getbitstampAJAX,10000);
+
+	
+	
+
+</script>
+
+<html>
+	<title> Coination 2 </title>
+	
+    <body>
+	<br><b>BTC-e</b>
+    <div id='btce'></div>
+	<br><b>Bitstamp</b>
+	<div id='bitstamp'></div>
+
+    </body>
+</html>

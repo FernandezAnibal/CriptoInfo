@@ -1,0 +1,75 @@
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+    
+	
+//cuentas BTCE
+    function getventa() {
+
+        var cuentas = $.ajax({
+            url: 'traderauto.php', 
+				type:"POST",
+				data:{"tipo" : "venta"},
+				async: false     
+        }).responseText;
+        
+        document.getElementById('Tasaltcusd1').value = cuentas;
+    }
+	
+	function getcompra() {
+
+        var cuentas = $.ajax({
+            url: 'traderauto.php', 
+				type:"POST",
+				data:{"tipo" : "compra"},
+				async: false     
+        }).responseText;
+        
+        document.getElementById('Tasaltcusd2').value = cuentas;
+		cuenta();
+		
+    }
+	
+	
+		
+
+	
+//Funcion para cuenta
+	function cuenta(){
+		ltc1 = document.getElementById('ltc1').value ;
+		tasalu1 = document.getElementById('Tasaltcusd1').value ;
+		tasalu2 = document.getElementById('Tasaltcusd2').value ;
+		usd = ((ltc1*tasalu1)-(ltc1*tasalu1)*0.002);
+		ltcfinal = ((((ltc1*tasalu1)-(ltc1*tasalu1)*0.002)/tasalu2)-(((ltc1*tasalu1)-(ltc1*tasalu1)*0.002)/tasalu2)*0.002) ;
+		gnd = ltcfinal-ltc1 ;
+		document.getElementById('usd').value= usd;
+		document.getElementById('ltc2').value= ltcfinal;
+		document.getElementById("Ganancia").innerHTML = Math.round(gnd * 10000) / 10000;
+	}
+	
+	function cuentaa(){
+		document.getElementById("Tasaltcusd2").value = 0.996004*document.getElementById('Tasaltcusd1').value ;
+	}
+	
+
+
+</script>
+
+<html>
+	<title> Cuentas </title>
+
+    <body>
+	<b> Vender</b>
+    <input type="text" class="CajaTexto" name="paso1" id="ltc1" size="8" value="0" onkeyup="cuenta()"> <b> Litecoins a </b>
+	<input type="text" class="CajaTexto" name="paso2" id="Tasaltcusd1" size="8" value="0" onkeyup="cuentaa()" > <b> se obtienen</b>
+	<input type="text" class="CajaTexto" name="paso3" id="usd" size="8" value="0" > <b> Dolares y Comprar a </b>
+	<input type="text" class="CajaTexto" name="paso4" id="Tasaltcusd2" size="8" value="0" onkeypress="return runScript(event)"> <b> se obtienen  </b>
+	<input type="text" class="CajaTexto" name="paso5" id="ltc2" size="8" value="8" > <b> Litecoins </b>
+	<div id='Ganancia'></div><b>Litecoins</b><br>
+	<button onclick="getventa()">Obtener valor de venta</button>
+	<button onclick="getcompra()">Obtener valor de compra</button>
+	<button onclick="cuentaa()">Valor Maximo de venta</button>	
+	<button onclick="cuenta()">Hallar cuenta</button><br>
+    </body>
+</html>
